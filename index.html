@@ -158,9 +158,11 @@
   .btn.solid{background:linear-gradient(120deg,#8b1e3f,#b8325a);color:#fff;border-color:transparent;box-shadow:0 8px 20px rgba(139,30,63,.28)}
   .btn.solid::after{content:'';position:absolute;top:0;left:-70%;width:40%;height:100%;background:rgba(255,255,255,.4);transform:skewX(-25deg);animation:sheen 4s infinite}
   @keyframes sheen{55%,100%{left:140%}}
-  .glass{background:linear-gradient(150deg,rgba(255,255,255,.9),rgba(255,247,232,.75));border:1px solid rgba(200,146,31,.4);border-radius:22px;
-    padding:30px 20px;box-shadow:0 14px 36px rgba(139,30,63,.1);transition:transform .4s ease,box-shadow .4s ease}
-  @media(hover:hover){.glass:hover{transform:translateY(-2px);box-shadow:0 18px 44px rgba(139,30,63,.14)}}
+  .glass{position:relative;background:linear-gradient(150deg,rgba(255,255,255,.9),rgba(255,247,232,.75));border:1px solid rgba(200,146,31,.4);border-radius:22px;
+    padding:30px 20px;box-shadow:0 14px 36px rgba(139,30,63,.1);transition:transform .4s ease,box-shadow .4s ease;overflow:hidden}
+  .glass::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(135deg,transparent 42%,rgba(255,225,150,.12) 48%,transparent 54%);transform:translateX(-100%);transition:none;pointer-events:none}
+  @media(hover:hover){.glass:hover{transform:translateY(-2px);box-shadow:0 18px 44px rgba(139,30,63,.14)}
+    .glass:hover::before{transform:translateX(100%);transition:transform .8s ease}}
   .fam{display:flex;flex-wrap:wrap;justify-content:center;gap:30px;margin-top:22px}
   .fam .label{letter-spacing:.3em;font-size:.68rem;text-transform:uppercase;color:var(--saffron);font-weight:500}
   .fam .n{font:italic 500 2.1rem/1.2 'Cormorant Garamond',serif;color:var(--maroon)}
@@ -186,6 +188,13 @@
   .rv{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
   .rv.show{opacity:1;transform:none}
   .rv:nth-child(2){transition-delay:.08s}.rv:nth-child(3){transition-delay:.16s}.rv:nth-child(4){transition-delay:.24s}
+  .rv-left{opacity:0;transform:translateX(-36px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
+  .rv-right{opacity:0;transform:translateX(36px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
+  .rv-scale{opacity:0;transform:scale(.92);transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1s cubic-bezier(.16,1,.3,1)}
+  .rv-left.show,.rv-right.show,.rv-scale.show{opacity:1;transform:none}
+  .eyebrow{position:relative}
+  .eyebrow::after{content:'';position:absolute;bottom:-6px;left:50%;width:0;height:1.5px;background:linear-gradient(90deg,transparent,var(--saffron),transparent);transition:width .8s .3s cubic-bezier(.16,1,.3,1),left .8s .3s cubic-bezier(.16,1,.3,1)}
+  .show .eyebrow::after,.eyebrow.show::after{width:60%;left:20%}
 
   /* bride and groom side by side */
   .fam2{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;margin-top:22px;text-align:center}
@@ -230,8 +239,8 @@
     background:radial-gradient(circle,#e8730c 0 2.2px,#f4a300 2.6px 6.2px,transparent 6.8px) left 4% top 0/17px 17px repeat-y,radial-gradient(circle,#e8730c 0 2.2px,#f4a300 2.6px 6.2px,transparent 6.8px) right 4% top 0/17px 17px repeat-y;
     -webkit-mask-image:linear-gradient(#000 55%,transparent);mask-image:linear-gradient(#000 55%,transparent)}
   .portrait img{display:block;position:relative;z-index:1;width:100%;height:auto;filter:drop-shadow(0 10px 16px rgba(120,40,40,.28))}
-  .ptxt{position:absolute;left:4%;right:4%;top:0;height:36%;padding-top:9%;height:36cqw;padding-top:9cqw;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:visible}
-  .ptxt .invite{margin:0;font-size:.6rem;letter-spacing:.18em}
+  .ptxt{position:absolute;left:2%;right:2%;top:0;height:36%;padding-top:9%;height:36cqw;padding-top:9cqw;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:visible}
+  .ptxt .invite{margin:0;font-size:.58rem;letter-spacing:.12em;max-width:96%;text-align:center}
   .ptxt .names{font-size:clamp(1.7rem,8vw,3.2rem);font-size:clamp(1.7rem,10.5cqw,3.2rem);margin:4px 0 0;white-space:nowrap}
   .ptxt .names span{display:inline}
   .hero .when{margin-top:18px}
@@ -327,9 +336,10 @@
   .np.show{opacity:1;transform:none}
   .credits{max-width:520px;margin:26px auto 0;font-size:.66rem;line-height:1.6;opacity:.6}
 
-  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv,.event>*:not(.ghost){opacity:1;transform:none;filter:none}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv,.rv-left,.rv-right,.rv-scale,.event>*:not(.ghost){opacity:1;transform:none;filter:none}
     .names span,.ganesh,.invite,.when,.heroart,.cvbtn{opacity:1;filter:none;letter-spacing:.02em}
-    .cvstage img{opacity:1}}
+    .cvstage img{opacity:1}
+    section::before{opacity:1;width:80px}}
   @media (hover:hover){.btn:hover{background:rgba(139,30,63,.08);transform:translateY(-2px)}
     .mapcard:hover{transform:translateY(-3px);box-shadow:0 24px 46px rgba(139,30,63,.28)}}
   @media (max-width:700px){.fam{gap:30px}}
@@ -382,7 +392,7 @@
   /* If the script ever fails on an old browser, show the page anyway instead of leaving it locked or blank */
   html.failsafe,html.failsafe body{overflow:auto!important}
   html.failsafe .cover{display:none!important}
-  html.failsafe .rv,html.failsafe .event>*:not(.ghost){opacity:1!important;transform:none!important;filter:none!important}
+  html.failsafe .rv,html.failsafe .rv-left,html.failsafe .rv-right,html.failsafe .rv-scale,html.failsafe .event>*:not(.ghost){opacity:1!important;transform:none!important;filter:none!important}
   html.failsafe .hero,html.failsafe .hero *{animation:none!important}
 
   /* Older browsers without aspect-ratio / individual transform properties */
@@ -409,9 +419,17 @@
   .cs-frame{position:relative;width:min(100%,340px);margin:0 auto;border-radius:50% 50% 22px 22px / 22% 22% 22px 22px;overflow:hidden;
     border:2px solid rgba(200,146,31,.7);box-shadow:0 0 0 6px #fffaf0,0 0 0 7.5px rgba(200,146,31,.45),0 24px 50px rgba(139,30,63,.24)}
   .cs-frame img{display:block;width:100%;height:auto}
-  .cs-frame::after{content:'';position:absolute;inset:0;box-shadow:inset 0 0 40px rgba(139,30,63,.15);pointer-events:none;border-radius:inherit}
+  .cs-frame::before{content:'';position:absolute;inset:-50%;width:200%;height:200%;background:conic-gradient(transparent,rgba(255,225,150,.18),transparent 30%);animation:frameGlow 6s linear infinite;z-index:2;pointer-events:none}
+  .cs-frame::after{content:'';position:absolute;inset:0;box-shadow:inset 0 0 40px rgba(139,30,63,.15);pointer-events:none;border-radius:inherit;z-index:3}
+  @keyframes frameGlow{to{transform:rotate(1turn)}}
   .cs-quote{margin-top:22px;font-size:1.3rem;color:var(--maroon);line-height:1.5}
   .cs-quote-en{margin-top:4px;font-size:.82rem;letter-spacing:.12em;color:var(--deep);opacity:.7;font-style:italic}
+  /* ---------- Smooth section separators ---------- */
+  section{position:relative}
+  section::before{content:'';display:block;width:40px;height:1.5px;margin:0 auto 20px;background:linear-gradient(90deg,transparent,var(--saffron),transparent);opacity:0;transition:opacity .8s .2s,width .8s .2s cubic-bezier(.16,1,.3,1)}
+  section.in-view::before{opacity:1;width:80px}
+  /* ---------- Parallax float on scroll ---------- */
+  .prlx{transition:transform .15s linear;will-change:transform}
 </style>
 </head>
 <body>
@@ -541,7 +559,7 @@
 <section class="tight" style="padding-top:50px;padding-bottom:30px">
   <div class="eyebrow rv">Together forever</div>
   <h2 class="rv" style="margin:12px 0 22px">Our journey begins</h2>
-  <div class="couple-showcase rv">
+  <div class="couple-showcase rv-scale">
     <div class="cs-frame">
       <img src="img/couple.webp" width="900" height="1285" alt="Mangesh and Pranita" loading="lazy">
     </div>
@@ -1764,8 +1782,25 @@ const rio = new IntersectionObserver(es => es.forEach(x => {
   if (!x.isIntersecting) return; const el = x.target; el.classList.add('show'); rio.unobserve(el);
   setTimeout(() => el.style.transitionDelay = '', 1800);
 }), {threshold:.08, rootMargin:'0px 0px -40px 0px'});
-document.querySelectorAll('section,footer').forEach(s => s.querySelectorAll('.rv').forEach((el,i) => { el.style.transitionDelay = (i%5)*.1 + 's'; }));
-document.querySelectorAll('.rv').forEach(el => rio.observe(el));
+document.querySelectorAll('section,footer').forEach(s => s.querySelectorAll('.rv,.rv-left,.rv-right,.rv-scale').forEach((el,i) => { el.style.transitionDelay = (i%5)*.1 + 's'; }));
+document.querySelectorAll('.rv,.rv-left,.rv-right,.rv-scale').forEach(el => rio.observe(el));
+
+/* ---------- Section in-view class for separator animations ---------- */
+const sio = new IntersectionObserver(es => es.forEach(x => {
+  if (x.isIntersecting) x.target.classList.add('in-view');
+}), {threshold:.15});
+document.querySelectorAll('section').forEach(s => sio.observe(s));
+
+/* ---------- Subtle parallax float on scroll ---------- */
+const prlxEls = document.querySelectorAll('.cs-frame,.portrait,.mapcard');
+if (prlxEls.length && !window.matchMedia('(prefers-reduced-motion:reduce)').matches) {
+  let ticking = false;
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(() => {
+    const vh = window.innerHeight;
+    prlxEls.forEach(el => { const r = el.getBoundingClientRect(); const pct = (r.top + r.height/2 - vh/2) / vh; el.style.transform = 'translateY(' + (pct * -12) + 'px)'; });
+    ticking = false;
+  }); } }, {passive:true});
+}
 
 let heroSync = () => {};                                     /* the hero animation starts once the cover is open */
 /* ===================================================================
