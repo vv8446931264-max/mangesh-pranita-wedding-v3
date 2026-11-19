@@ -229,9 +229,10 @@
   @keyframes nudge{50%{transform:translate(-5px,-50%)}}
 
   /* ---------- Hero portrait: the couple under an arch, their names in the painted sky ---------- */
-  .portrait{position:relative;margin:16px auto 0;container-type:inline-size;overflow:hidden;
+  .portrait-wrap{position:relative;margin:16px auto 0;container-type:inline-size;
+    width:min(100%,440px,calc((100vh - 230px) / 1.79));width:min(100%,440px,calc((100svh - 230px) / 1.79));min-width:min(100%,280px)}
+  .portrait{position:relative;overflow:hidden;
     background:radial-gradient(ellipse at 50% 62%,#fffdf4 0%,#ffeccf 52%,#ffd2b8 100%);
-    width:min(100%,440px,calc((100vh - 230px) / 1.79));width:min(100%,440px,calc((100svh - 230px) / 1.79));min-width:min(100%,280px);
     border-radius:50% 50% 22px 22px / 20% 20% 22px 22px;border:1.5px solid rgba(200,146,31,.7);
     box-shadow:0 0 0 6px #fffaf0,0 0 0 7.5px rgba(200,146,31,.45),0 26px 60px rgba(139,30,63,.28)}
   .portrait::before{content:'';display:block;aspect-ratio:100/36}   /* clear space above the couple, for the names */
@@ -467,8 +468,10 @@
   <svg class="mandala" id="mandala" viewBox="-400 -400 800 800" aria-hidden="true"></svg>
   <svg class="toran" id="toran" aria-hidden="true"></svg>
   <div class="ganesh mr" id="deities"></div>
-  <div class="portrait">
-    <img src="img/couple-cut.webp" width="900" height="1285" alt="Illustration of Mangesh and Pranita in traditional Marathi attire against marigold garlands" fetchpriority="high">
+  <div class="portrait-wrap">
+    <div class="portrait">
+      <img src="img/couple-cut.webp" width="900" height="1285" alt="Illustration of Mangesh and Pranita in traditional Marathi attire against marigold garlands" fetchpriority="high">
+    </div>
     <div class="ptxt">
       <div class="invite">Together with our families, we invite you</div>
       <h1 class="names serif goldtxt"><span id="gName"></span><span class="amp">&amp;</span><span class="b" id="bName"></span></h1>
@@ -1792,7 +1795,7 @@ const sio = new IntersectionObserver(es => es.forEach(x => {
 document.querySelectorAll('section').forEach(s => sio.observe(s));
 
 /* ---------- Subtle parallax float on scroll ---------- */
-const prlxEls = document.querySelectorAll('.cs-frame,.portrait,.mapcard');
+const prlxEls = document.querySelectorAll('.cs-frame,.portrait-wrap,.mapcard');
 if (prlxEls.length && !window.matchMedia('(prefers-reduced-motion:reduce)').matches) {
   let ticking = false;
   window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(() => {
